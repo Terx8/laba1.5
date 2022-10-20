@@ -7,7 +7,7 @@
 
 #include <string>
 #include <iostream>
-#include <sstream>
+#include<fstream>
 
 using namespace std;
 string monster::get_name()
@@ -36,14 +36,15 @@ void monster::set_description(string* val)
 
 monster::monster()
 {
+	cout << "monster()" << endl;
 	name = getRandomName();
 
 	description = getRandomDescription();
 
-	setType(MONSTER);
+	set_type(MONSTER);
 }
 
-monster::~monster() {};
+monster::~monster() { cout << "~monster()" << endl; };
 
 
 
@@ -53,6 +54,23 @@ void monster::print()
 	std::cout << "\tname\t" << get_name() << std::endl;
 	std::cout << "\tdescription\t" << get_description() << std::endl;
 }
+
+void monster::print_to_file(char* fn)
+{
+	ofstream fout(fn, ios_base::app);
+
+	if (!fout.is_open())
+	{
+		cout << "could not open the file" << endl;
+		return;
+	}
+	fout << get_type() << endl;
+	fout << get_name() << endl;
+	fout << get_description() << endl;
+
+	fout.close();
+}
+
 
 int monster::edit()
 {

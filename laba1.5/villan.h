@@ -113,11 +113,13 @@ public:
 	void delete_skill();
 
 	void print() override;
+	void print_to_file(char*) override;
 	int edit() override;
 	void edit_exist();
 
 
 	villan();
+	villan(ifstream* f);
 	~villan();
 
 	string operator[](int i);

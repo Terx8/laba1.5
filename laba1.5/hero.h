@@ -83,7 +83,7 @@ public:
 	int edit() override;
 	void edit_exist();
 
-
+	void print_to_file(char* fn) override;
 
 	hero();
 	~hero();

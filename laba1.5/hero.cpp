@@ -7,24 +7,22 @@
 
 #include <string>
 #include <iostream>
-#include <sstream>
-#include <cstdint>
-#include <cstring>
+#include<fstream>
 
 using namespace std;
 
 hero::hero()
 {
-
+	cout << "hero()" << endl;
 	name = getRandomName();
 	weapon = getRandomWeapon();
 	skills = nullptr;
 	skill_num = 0;
 
-	setType(HERO);
+	set_type(HERO);
 }
 
-hero::~hero() {};
+hero::~hero() { cout << "~hero()" << endl; };
 
 
 int hero::get_skill_num()
@@ -110,7 +108,6 @@ void hero::delete_skill()
 
 void hero::print()
 {
-	//printf("HERO\n\tname:\t%s\n\tweapon:\t%s\n\tskills: \n", (char*)&get_name(), (char*)&get_weapon());
 	printf("HERO\n");
 	std::cout << "\tname\t" << get_name() << std::endl;
 	std::cout << "\tweapon\t" << get_weapon() << std::endl;
@@ -124,6 +121,30 @@ void hero::print()
 
 	printf("\n");
 }
+
+
+
+void hero::print_to_file(char* fn)
+{
+	ofstream fout(fn, ios_base::app);
+
+	if (!fout.is_open())
+	{
+		cout << "could not open the file" << endl;
+		return;
+	}
+	fout << get_type() << endl;
+	fout << get_name() << endl;
+	fout << get_weapon() << endl;
+
+	fout << skill_num << endl;
+
+	for (int i = 0; i < skill_num; i++)
+		fout << *get_skill(i) << endl;
+
+	fout.close();
+}
+
 
 int hero::edit()
 {
@@ -152,8 +173,6 @@ int hero::edit()
 			printf("invalid input\n");
 			break;
 		}
-
-
 	}
 }
 

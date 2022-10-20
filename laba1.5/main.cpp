@@ -68,9 +68,17 @@ int menu()
 			break;
 
 		case SAVE:
+			Keep.print_all_to_file();
 			break;
 
 		case LOAD:
+			printf("ATENTION: ALL NOT SAVED DATA WILL BE LOST. WANT TO PROCEED?\n 1 YES; 0 NO\n"); 
+			{
+				int in = -1;
+				while (in < 0 || in > 1) mscanf("%d", &in);
+				if (in == 1)
+					Keep.load();
+			}
 			break;
 
 		}

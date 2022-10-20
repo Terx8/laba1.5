@@ -5,15 +5,14 @@
 #include "stdio.h"
 #include <string>
 #include <iostream>
-#include <sstream>
-
+#include<fstream>
 
 using namespace std;
 
 
 villan::villan()
 {
-
+	cout << "villan()" << endl;
 	name = getRandomName();
 	weapon = getRandomWeapon();
 	evil_deed = getRandomEvilDeed();
@@ -22,8 +21,10 @@ villan::villan()
 	skills = nullptr;
 	skill_num = 0;
 
-	setType(VILLAN);
+	set_type(VILLAN);
 }
+
+villan::~villan() { cout << "~villan()" << endl; };
 
 int villan::get_skill_num()
 {
@@ -120,15 +121,6 @@ void villan::delete_skill()
 }
 
 
-
-
-
-
-
-villan::~villan() {};
-
-
-
 void villan::print()
 {
 	printf("VILLAN\n");
@@ -145,6 +137,53 @@ void villan::print()
 		printf("\t___\n");
 
 	printf("\n");
+}
+
+void villan::print_to_file(char* fileName)
+{
+	ofstream fout(fileName, ios_base::app);
+
+	if (!fout.is_open())
+	{
+		cout << "could not open the file" << endl;
+		return;
+	}
+	fout << get_type() << endl;
+	fout << get_name() << endl;
+	fout << get_weapon() << endl;
+	fout << get_evil_deed() << endl;
+	fout << get_residence() << endl;
+	fout << skill_num << endl;
+	
+	for (int i = 0; i < skill_num; i++)
+		fout << *get_skill(i) << endl;
+	
+	fout.close();
+}
+
+villan::villan(ifstream* f)
+{
+	string s;
+	getline(*f, s); set_name(&s);
+	getline(*f, s); set_name(&s);
+	getline(*f, s); set_weapon(&s);
+	getline(*f, s); set_evil_deed(&s);
+	getline(*f, s); set_residence(&s);
+	/**f >> name;
+	*f >> weapon;
+	*f >> evil_deed;
+	*f >> residence;*/
+	*f >> skill_num;
+	
+	skills = new string*[skill_num];
+	for (int i = 0; i < skill_num; i++)
+	{
+		skills[i] = new string;
+		*f >> *skills[i];
+	}
+
+	set_type(VILLAN);
+	
 }
 
 int villan::edit()
@@ -225,3 +264,4 @@ string villan::operator[](int i)
 	else
 		return nullptr;
 }
+

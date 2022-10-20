@@ -30,21 +30,24 @@ int mscanf(const char*  _f, void* _x)
 
 heroes::heroes() 
 { 
-	type = 0; 
+	cout << "heroes()" << endl;
+	set_type(0);
+	
 };
 
 heroes::~heroes() 
 {
-
+	cout << "~heroes()" << endl;
 };
 
-int heroes::getType()
+int heroes::get_type()
 {
 	return type;
 }
 
-void heroes::setType(int _t)
+void heroes::set_type(int _t)
 {
 	type = _t;
 }
+
 

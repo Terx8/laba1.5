@@ -1,17 +1,29 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "keeper.h"
-
+#include<fstream>
 
 keeper::keeper()
 {
 	arr = nullptr;
 	size = 0;
+	setFileName((char*)"allheroes.txt");
 }
 
 keeper::~keeper()
 {
 
+}
+
+
+char* keeper::getFileName()
+{
+	return fileName;
+}
+
+void keeper::setFileName(char* v)
+{
+	fileName = v;
 }
 
 int  keeper::print_menu()
@@ -24,7 +36,6 @@ int  keeper::print_menu()
 		printf("100 EXIT\n0 PRINT ALL\n1 PRINT ONLY HEROES\n2 PRINT ONLY VILLANS\n3 PRINT ONLY MONSTERS\n");
 
 		mscanf("%d", &t);
-
 
 		switch (t)
 		{
@@ -39,7 +50,7 @@ int  keeper::print_menu()
 			count = 0;
 			for (int i = 0; i < size; i++)
 			{
-				if (arr[i]->getType() == HERO)
+				if (arr[i]->get_type() == HERO)
 				{
 					arr[i]->print();
 					count++;
@@ -53,7 +64,7 @@ int  keeper::print_menu()
 			count = 0;
 			for (int i = 0; i < size; i++)
 			{
-				if (arr[i]->getType() == VILLAN)
+				if (arr[i]->get_type() == VILLAN)
 				{
 					arr[i]->print();
 					count++;
@@ -67,7 +78,7 @@ int  keeper::print_menu()
 			count = 0;
 			for (int i = 0; i < size; i++)
 			{
-				if (arr[i]->getType() == MONSTER)
+				if (arr[i]->get_type() == MONSTER)
 				{
 					arr[i]->print();
 					count++;
@@ -85,7 +96,7 @@ int  keeper::print_menu()
 
 }
 
-void  keeper::print_all()
+void keeper::print_all()
 {
 	printf("ALL:\n");
 	if (size == 0)
@@ -95,8 +106,94 @@ void  keeper::print_all()
 		{
 			arr[i]->print();
 		}
-
 }
+
+void keeper::print_all_to_file()
+{
+	ofstream fout(getFileName(), ios_base::trunc);
+
+	if (!fout.is_open())
+	{
+		cout << "could not open the file" << endl;
+		return;
+	}
+	fout.close();
+	fout.open(getFileName(), ios_base::app);
+
+	if (!fout.is_open())
+	{
+		cout << "could not open the file" << endl;
+		return;
+	}
+	fout << size << endl;
+	fout.close();
+	
+	for (int i = 0; i < size; i++)
+		arr[i]->print_to_file(getFileName());
+	
+}
+
+void keeper::load()
+{
+	char buff[50];
+	ifstream fin(getFileName());
+
+	if (!fin.is_open())
+	{
+		cout << "could not open the file" << endl;
+		return;
+	}
+	int s = 0;
+	fin >> s;
+	if (s <= 0)
+	{
+		fin.close();
+		cout << "something is wrong with data" << endl;
+		return;
+	}
+
+
+	int tip = 0;
+
+	delete[] arr;
+	heroes** new_arr = new heroes * [s];
+
+	for (int i = 0; i < s; i++)
+	{
+
+		fin >> tip;
+		//new_arr[i] = new heroes;
+		switch (tip)
+		{
+		case VILLAN:
+			new_arr[i] = new villan(&fin);
+			break;
+
+		case HERO:
+			//new_arr[i] = new hero(fin);
+			break;
+
+		case MONSTER:
+			//new_arr[i] = new monster(fin);
+			break;
+
+		default:
+			fin.close();
+			cout << "something is wrong with data" << endl;
+			return;
+		}
+
+
+
+	}
+
+	arr = new_arr;
+	size = s;
+
+	fin.close(); 
+}
+
+
 
 void  keeper::add()
 {
@@ -140,7 +237,6 @@ void  keeper::add()
 	}
 
 	new_arr[size] = hero_add;
-	delete arr; // ?
 	arr = new_arr;
 
 	size++;

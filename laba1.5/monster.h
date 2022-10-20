@@ -71,7 +71,7 @@ public:
 	void print() override;
 	int edit() override;
 	void edit_exist();
-
+	void print_to_file(char*) override;
 
 
 	monster();
