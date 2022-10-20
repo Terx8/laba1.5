@@ -166,7 +166,7 @@ void villan::print_to_file(char* fileName)
 villan::villan(ifstream* f)
 {
 	string s;
-	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+	getline(*f, s); 
 	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
 	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_weapon(&s);
 	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_evil_deed(&s);

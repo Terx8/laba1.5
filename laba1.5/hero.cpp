@@ -125,7 +125,8 @@ void hero::print()
 hero::hero(ifstream* f)
 {
 	string s;
-	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+
+	getline(*f, s); 
 	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data";; set_name(&s);
 	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_weapon(&s);
 	*f >> skill_num;

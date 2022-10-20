@@ -155,7 +155,7 @@ void keeper::load()
 
 	int tip = 0;
 
-	delete[] arr;
+	
 	heroes** new_arr = new heroes * [s];
 	if (new_arr == nullptr)
 		throw (char*)"memory error in load";
@@ -206,7 +206,7 @@ void keeper::load()
 		}
 
 	}
-
+	delete[] arr;
 	arr = new_arr;
 	size = s;
 
