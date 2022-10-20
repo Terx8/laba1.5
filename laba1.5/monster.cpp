@@ -72,6 +72,16 @@ void monster::print_to_file(char* fn)
 }
 
 
+monster::monster(ifstream* f)
+{
+	string s;
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_description(&s);
+
+	set_type(MONSTER);
+}
+
 int monster::edit()
 {
 	int input = 0;

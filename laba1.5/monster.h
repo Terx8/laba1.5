@@ -73,7 +73,7 @@ public:
 	void edit_exist();
 	void print_to_file(char*) override;
 
-
+	monster(ifstream* f);
 	monster();
 	~monster();
 

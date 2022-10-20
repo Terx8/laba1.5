@@ -68,7 +68,6 @@ public:
 
 	string* get_skill(int _i);
 
-
 	void set_name(string* val);
 
 	void set_weapon(string* val);
@@ -87,10 +86,9 @@ public:
 
 	hero();
 	~hero();
-
+	hero(ifstream* f);
 	string  operator[](int i);
-	
-	string* get_f(int i);
+
 	
 };
 

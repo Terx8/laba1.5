@@ -122,7 +122,24 @@ void hero::print()
 	printf("\n");
 }
 
+hero::hero(ifstream* f)
+{
+	string s;
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data";; set_name(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_weapon(&s);
+	*f >> skill_num;
 
+	skills = new string * [skill_num];
+	if (skills == nullptr) throw (char*)"memory error in load";
+	for (int i = 0; i < skill_num; i++)
+	{
+		skills[i] = new string;
+		getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; *skills[i] = s;
+	}
+
+	set_type(VILLAN);
+}
 
 void hero::print_to_file(char* fn)
 {
@@ -211,11 +228,6 @@ void hero::edit_exist()
 	}
 }
 
-string* hero::get_f(int i)
-{
-
-	return nullptr;
-}
 
 string hero::operator[](int i)
 {

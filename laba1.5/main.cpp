@@ -77,7 +77,14 @@ int menu()
 				int in = -1;
 				while (in < 0 || in > 1) mscanf("%d", &in);
 				if (in == 1)
-					Keep.load();
+				{
+					try { Keep.load(); }
+					catch(char* l)
+					{
+						printf("caught exeption %s\n", l);
+					}
+
+				}
 			}
 			break;
 

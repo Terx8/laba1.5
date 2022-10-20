@@ -28,6 +28,8 @@ int mscanf(const char*  _f, void* _x)
 	}
 }
 
+
+
 heroes::heroes() 
 { 
 	cout << "heroes()" << endl;

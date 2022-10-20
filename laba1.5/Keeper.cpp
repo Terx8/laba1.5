@@ -157,24 +157,46 @@ void keeper::load()
 
 	delete[] arr;
 	heroes** new_arr = new heroes * [s];
+	if (new_arr == nullptr)
+		throw (char*)"memory error in load";
 
 	for (int i = 0; i < s; i++)
 	{
 
 		fin >> tip;
-		//new_arr[i] = new heroes;
 		switch (tip)
 		{
 		case VILLAN:
-			new_arr[i] = new villan(&fin);
+			try {
+				new_arr[i] = new villan(&fin);
+			}
+			catch (char* l)
+			{
+				fin.close();
+				throw l;
+			}
 			break;
 
 		case HERO:
-			//new_arr[i] = new hero(fin);
+			try {
+			new_arr[i] = new hero(&fin);
+			}
+			catch (char* l)
+			{
+				fin.close();
+				throw l;
+			}
 			break;
 
 		case MONSTER:
-			//new_arr[i] = new monster(fin);
+			try {
+			new_arr[i] = new monster(&fin);
+			}
+			catch (char* l)
+			{
+				fin.close();
+				throw l;
+			}
 			break;
 
 		default:
@@ -182,8 +204,6 @@ void keeper::load()
 			cout << "something is wrong with data" << endl;
 			return;
 		}
-
-
 
 	}
 

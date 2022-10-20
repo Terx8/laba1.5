@@ -15,7 +15,7 @@ using namespace std;
 
 int Rand(int, int);
 int mscanf(const char* _f, void* _x);
-
+int isEmpty(string*);
 
 
 class heroes

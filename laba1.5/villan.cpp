@@ -161,29 +161,28 @@ void villan::print_to_file(char* fileName)
 	fout.close();
 }
 
+
+
 villan::villan(ifstream* f)
 {
 	string s;
-	getline(*f, s); set_name(&s);
-	getline(*f, s); set_name(&s);
-	getline(*f, s); set_weapon(&s);
-	getline(*f, s); set_evil_deed(&s);
-	getline(*f, s); set_residence(&s);
-	/**f >> name;
-	*f >> weapon;
-	*f >> evil_deed;
-	*f >> residence;*/
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_name(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_weapon(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_evil_deed(&s);
+	getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; set_residence(&s);
 	*f >> skill_num;
 	
 	skills = new string*[skill_num];
+	if (skills == nullptr) throw (char*)"memory error in load";
 	for (int i = 0; i < skill_num; i++)
 	{
 		skills[i] = new string;
-		*f >> *skills[i];
+		//*f >> *skills[i];
+		getline(*f, s); if (s.empty()) throw (char*)"something is wrong with data"; *skills[i] = s;
 	}
 
 	set_type(VILLAN);
-	
 }
 
 int villan::edit()
